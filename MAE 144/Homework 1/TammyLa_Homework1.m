@@ -28,14 +28,15 @@ clc,clear,close all
 for z1=1;p1=10;
     [zz,zp,z0,k]=TL_C2D_matched(z1,p1);
     fprintf('The corresponding D(z) transfer function is:  D(z)=%0.4f*((s+%0.4f)/((s+%0.4f)*(s+%0.4f)))\n',k,zz,z0,zp)
-    %Dz=k*((s+zz)/((s+z0)*(s+zp)));
-    Dz=RR_tf(z1,[0,p1],1);
-    Dzm=c2d(Dz,1/100,'matched');
+    %The final transfer function should be in the form of Dz=k*((s+zz)/((s+z0)*(s+zp)));
 end
+
+Dz=tf([1,z1],[1,p1,0]);
+Dzm=c2d(Dz,1/100,'matched')
 
 function [zz,zp,z0,k]=TL_C2D_matched(z1,p1)
 % function [Dz]=TL_C2D_matched(z1,p1)
-% Convert a D(s) to a corresponding D(z) using the Matched Z-Transform Method
+% Converts a given D(s) to a corresponding D(z) using the Matched Z-Transform Method.
 % Tammy La - Homework 1, https://github.com/Tammy-La
     h=1/100;
     s1=0;
