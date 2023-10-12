@@ -29,8 +29,6 @@ for z1=1;p1=10;
     [zz,zp,z0,k]=TL_C2D_matched(z1,p1);
     fprintf('The corresponding D(z) transfer function is:  D(z)=%0.4f*((s+%0.4f)/((s+%0.4f)*(s+%0.4f)))\n',k,zz,z0,zp)
     %Dz=k*((s+zz)/((s+z0)*(s+zp)));
-    Dz=RR_tf(z1,[0,p1],1);
-    Dzm=c2d(Dz,1/100,'matched');
 end
 
 function [zz,zp,z0,k]=TL_C2D_matched(z1,p1)
