@@ -1,22 +1,16 @@
 %% Problem 1:
 clc,clear,close all
 
-y=tf(0.1,[1,0.1],'InputDelay',6);
-bode(y);
+G=tf(0.1,[1,0.1],'InputDelay',6);
+bode(G);
 grid on
-
 %% Problem 4a:
 clc,close all
 
 figure(1)
-x=pade(y,2);
-rlocus(x)
-figure(2)
-SYS=tf([0.1,0.1],1);
-x=pade(y*SYS,2);
-rlocus(x)
-figure(3)
-bode(y*SYS);
+Gp=pade(G,2);
+figure(1)
+rlocus(Gp)
 
 a=0.6;
 b=0.5;
@@ -31,15 +25,16 @@ wI=1/TI;
 TD=g*Tu;
 wD=1/TD;
 fprintf('The values of Kp, wI, and wD are %0.4f, %0.4f, and %0.4f, respectively.\n',Kp,wI,wD)
-%% Problem 4b:
-clc,close all
 
-% lsim(SYS,u,t);
+figure(2)
+D=tf(Kp*TD*[1,1/TD,1/(TI*TD)],[1,0]);
+DG=D*G;
+bode(DG)
+margin(DG)
 %% Problem 6a:
 clc,close all
 
 Ds=RR_tf(0.1,[1,0.1]);
 [Dz]=RR_C2D_tustin(Ds,2,0.318);
-opt = c2dOptions('Method','tustin','PrewarpFrequency',omegac); c2d(tf(ys,xs),h,opt)
-%% Problem 6b:
-clc,close all
+opt = c2dOptions('Method','tustin','PrewarpFrequency',0.318);
+c2d(tf(0.1,[1,0.1]),2,opt)
